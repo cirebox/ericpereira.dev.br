@@ -15,7 +15,7 @@ class _ButtonThemeWidgetState extends State<ButtonThemeWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: IconButton(
         onPressed: () {
           Provider.of<CustomTheme>(context, listen: false).toggleTheme();

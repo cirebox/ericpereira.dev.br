@@ -9,9 +9,14 @@ class CustomTheme with ChangeNotifier {
   }
 
   static double get fontSizeTitleMedium => 28;
+  static Color? get fontColorLight => Colors.black;
+  static Color? get fontColorDark => Colors.white;
 
   static ThemeData get lightTheme => ThemeData(
         scaffoldBackgroundColor: Colors.white,
+        drawerTheme: DrawerThemeData(
+          backgroundColor: Colors.white.withOpacity(0.9),
+        ),
         dividerColor: Colors.transparent,
         cardColor: Colors.white,
         fontFamily: 'Nunito',
@@ -19,6 +24,7 @@ class CustomTheme with ChangeNotifier {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         appBarTheme: const AppBarTheme().copyWith(
           backgroundColor: Colors.white,
+          iconTheme: IconThemeData(color: fontColorLight),
           elevation: 0,
         ),
         listTileTheme: const ListTileThemeData(
@@ -35,6 +41,9 @@ class CustomTheme with ChangeNotifier {
 
   static ThemeData get darkTheme => ThemeData(
         scaffoldBackgroundColor: Colors.black,
+        drawerTheme: DrawerThemeData(
+          backgroundColor: Colors.black.withOpacity(0.5),
+        ),
         dividerColor: Colors.transparent,
         cardColor: Colors.white,
         fontFamily: 'Nunito',
@@ -42,6 +51,7 @@ class CustomTheme with ChangeNotifier {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         appBarTheme: const AppBarTheme().copyWith(
           backgroundColor: Colors.black,
+          iconTheme: IconThemeData(color: fontColorDark),
           elevation: 0,
         ),
         listTileTheme: const ListTileThemeData(
@@ -50,8 +60,8 @@ class CustomTheme with ChangeNotifier {
           minVerticalPadding: 10,
           style: ListTileStyle.list,
         ),
-        cardTheme: const CardTheme(
-          color: Colors.white,
+        cardTheme: CardTheme(
+          color: fontColorDark,
           elevation: 6,
         ),
       );
@@ -59,14 +69,14 @@ class CustomTheme with ChangeNotifier {
   static TextTheme get lightTextTheme => TextTheme(
         titleMedium: TextStyle(
           fontSize: fontSizeTitleMedium,
-          color: Colors.black,
+          color: fontColorLight,
         ),
       );
 
   static TextTheme get darkTextTheme => ThemeData.dark().textTheme.copyWith(
         titleMedium: TextStyle(
           fontSize: fontSizeTitleMedium,
-          color: Colors.white,
+          color: fontColorDark,
         ),
       );
 }
