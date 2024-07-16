@@ -54,7 +54,7 @@ class _TextCustomState extends State<TextCustom> {
         overflow: widget.textOverflow,
         textScaleFactor: 0.8,
         softWrap: true,
-        maxLines: 8,
+        // maxLines: 8,
         style: GoogleFonts.roboto(
           height: widget.textHeight,
           textStyle: TextStyle(

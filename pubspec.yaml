@@ -19,6 +19,8 @@ dependencies:
   responsive_builder: ^0.7.1
   url_launcher: ^6.1.10
   provider: ^6.1.2
+  font_awesome_flutter: ^10.7.0
+  flutter_launch: ^0.3.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
