@@ -9,7 +9,7 @@ import 'app/theme/theme.custom.app.dart';
 
 void main() {
   // ignore: prefer_const_constructors
-  setUrlStrategy(PathUrlStrategy());
+  // setUrlStrategy(PathUrlStrategy());
 
   runApp(
     ChangeNotifierProvider(
