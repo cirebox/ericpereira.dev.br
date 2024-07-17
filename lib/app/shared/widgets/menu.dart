@@ -22,8 +22,7 @@ class _MenuState extends State<Menu> {
             children: [
               _buildMenuButton(text: 'Sobre', route: '/sobre/'),
               _buildMenuButton(text: 'Portfólio', route: '/portfolio/'),
-              _buildMenuButton(text: 'Blog', route: '/blog/'),
-              _buildMenuButton(text: 'Contato', route: '/contato/'),
+              // _buildMenuButton(text: 'Blog', route: '/blog/'),
             ],
           );
         }
@@ -45,8 +44,7 @@ class _MenuState extends State<Menu> {
             ),
             _buildMenuButton(text: 'Sobre', route: '/sobre/'),
             _buildMenuButton(text: 'Portfólio', route: '/portfolio/'),
-            _buildMenuButton(text: 'Blog', route: '/blog/'),
-            _buildMenuButton(text: 'Contato', route: '/contato/'),
+            // _buildMenuButton(text: 'Blog', route: '/blog/'),
           ],
         );
       },

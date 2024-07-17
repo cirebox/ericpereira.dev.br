@@ -33,14 +33,14 @@ class CustomTheme with ChangeNotifier {
           minVerticalPadding: 10,
           style: ListTileStyle.list,
         ),
-        cardTheme: const CardTheme(
-          color: Colors.white,
-          elevation: 6,
+        cardTheme: CardTheme(
+          color: Colors.white.withOpacity(0.9),
+          elevation: 2,
         ),
       );
 
   static ThemeData get darkTheme => ThemeData(
-        scaffoldBackgroundColor: Colors.black,
+        scaffoldBackgroundColor: Colors.black.withOpacity(0.8),
         drawerTheme: DrawerThemeData(
           backgroundColor: Colors.black.withOpacity(0.5),
         ),
@@ -61,8 +61,8 @@ class CustomTheme with ChangeNotifier {
           style: ListTileStyle.list,
         ),
         cardTheme: CardTheme(
-          color: fontColorDark,
-          elevation: 6,
+          color: Colors.white.withOpacity(0.9),
+          elevation: 2,
         ),
       );
 

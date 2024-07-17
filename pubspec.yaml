@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  intl: any
   cupertino_icons: ^1.0.2
   flutter_modular: ^5.0.3
   flutter_triple: ^1.2.7+4
@@ -21,6 +22,7 @@ dependencies:
   provider: ^6.1.2
   font_awesome_flutter: ^10.7.0
   flutter_launch: ^0.3.0
+  dartz: ^0.10.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -28,3 +30,12 @@ dev_dependencies:
   build_runner: ^2.2.1
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/cirebox.png
+    - assets/images/saaetri.png
+    - assets/images/boxtransporte.png
+    - assets/images/engexata-engenharia.png
+    - assets/images/cnhbrasil.png
+    - assets/images/simulador-unifor.png
+    - assets/images/vai-bem-saude.png
+    - assets/images/victorfeitosaimoveis.png

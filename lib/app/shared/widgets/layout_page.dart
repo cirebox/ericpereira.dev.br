@@ -13,7 +13,44 @@ class LayoutPage extends StatefulWidget {
 }
 
 class _LayoutPageState extends State<LayoutPage> {
+  final ScrollController _scrollController = ScrollController();
   final GlobalKey<ScaffoldState> _sKey = GlobalKey();
+
+  bool _isScrolled = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _scrollController.addListener(() {
+      if (_scrollController.offset > 200 && !_isScrolled) {
+        setState(() {
+          _isScrolled = true;
+        });
+      } else if (_scrollController.offset <= 200 && _isScrolled) {
+        setState(() {
+          _isScrolled = false;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  void _scrollToTop() {
+    _scrollController.animateTo(
+      0.0,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+    setState(() {
+      _isScrolled = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +61,7 @@ class _LayoutPageState extends State<LayoutPage> {
       ],
       endDrawer: const Drawer(child: Menu()),
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Align(
           alignment: Alignment.topCenter,
           child: Container(
@@ -40,6 +78,20 @@ class _LayoutPageState extends State<LayoutPage> {
                 ],
               ),
             ),
+          ),
+        ),
+      ),
+      floatingActionButton: Visibility(
+        visible: _isScrolled,
+        child: FloatingActionButton(
+          backgroundColor: Colors.black45,
+          elevation: 1,
+          onPressed: () {
+            _scrollToTop();
+          },
+          child: const Icon(
+            Icons.arrow_upward_outlined,
+            color: Colors.white,
           ),
         ),
       ),
