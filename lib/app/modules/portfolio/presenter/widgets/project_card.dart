@@ -36,14 +36,14 @@ class ProjectCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: SizedBox(
-            height: 200,
+            height: 170,
             width: 280,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SizedBox(
-                  height: 130,
+                  height: 100,
                   child: Image.network(
                     imageUrl,
                     fit: BoxFit.fill,
