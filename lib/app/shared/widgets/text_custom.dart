@@ -1,5 +1,7 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TextCustom extends StatefulWidget {
   final String data;
@@ -67,4 +69,56 @@ class _TextCustomState extends State<TextCustom> {
           ),
         ),
       );
+}
+
+class TextSpanCustom extends TextSpan {
+  final String data;
+  final TextOverflow? textOverflow;
+  final Color? color;
+  final double? fontSize;
+  final FontWeight? fontWeight;
+  final TextDecoration? textDecoration;
+  final double? textHeight;
+  final String? href;
+  TextSpanCustom(
+    this.data, {
+    this.textOverflow,
+    this.color,
+    this.fontSize = 14,
+    this.fontWeight = FontWeight.w600,
+    this.textDecoration,
+    this.textHeight,
+    this.href,
+    super.children,
+    super.mouseCursor,
+    super.onEnter,
+    super.onExit,
+    super.semanticsLabel,
+    super.locale,
+    super.spellOut,
+  }) : super(
+          text: data,
+          style: GoogleFonts.roboto(
+            height: textHeight,
+            color: color,
+            textStyle: TextStyle(
+              fontSize: fontSize,
+              fontWeight: fontWeight,
+              letterSpacing: .5,
+              overflow: textOverflow,
+              decoration: textDecoration,
+            ),
+          ),
+          recognizer: TapGestureRecognizer()
+            ..onTap = () async {
+              if (href != null) {
+                if (await canLaunchUrl(Uri.parse(href))) {
+                  await launchUrl(Uri.parse(href));
+                } else {
+                  // ignore: use_build_context_synchronously
+                  throw 'Could not launch $href';
+                }
+              }
+            },
+        );
 }
