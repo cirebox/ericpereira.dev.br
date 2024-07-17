@@ -44,7 +44,7 @@ class ProjectCard extends StatelessWidget {
               children: [
                 SizedBox(
                   height: 100,
-                  child: Image.network(
+                  child: Image.asset(
                     imageUrl,
                     fit: BoxFit.fill,
                   ),
