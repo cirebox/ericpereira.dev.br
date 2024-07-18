@@ -1,8 +1,4 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-import '../../../shared/widgets/snackbar/snackbar.dart';
 import '../../../shared/widgets/text_custom.dart';
 
 class Description extends StatelessWidget {
@@ -25,7 +21,7 @@ class Description extends StatelessWidget {
               text: TextSpan(
                 children: [
                   TextSpanCustom(
-                    'Sou Técnico em Informática, graduado em Análise Desenvolvimento de Sistemas pela ',
+                    'Sou desenvolvedor graduado em Análise Desenvolvimento de Sistemas pela ',
                     fontSize: 20,
                     fontWeight: FontWeight.w400,
                     textHeight: 1.2,
@@ -56,13 +52,6 @@ class Description extends StatelessWidget {
                   ),
                   TextSpanCustom(
                     ' e pai de família.\n\nTrabalho com desenvolvimento há alguns anos, comecei minha carreira profissional aos 18 anos de idade, como desenvolvedor desktop utilizando Delphi, para contrução de aplicações. Logo depois comecei a estudar php, html e css, e fui desenvolvendo minhas primeiras aplicações web.\n\n',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400,
-                    textHeight: 1.2,
-                    color: Theme.of(context).textTheme.titleMedium!.color,
-                  ),
-                  TextSpanCustom(
-                    'Ao longo dos anos estudei e trabalhei com algumas tecnologias como Sql, Python, Java, Kotlin, React, Flutter, entre outras. Porém optei por me especializar em desenvolvimento back-end, especialmente no ecossistema do Node.js.\n\n',
                     fontSize: 20,
                     fontWeight: FontWeight.w400,
                     textHeight: 1.2,
