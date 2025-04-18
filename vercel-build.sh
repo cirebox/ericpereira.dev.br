@@ -50,6 +50,9 @@ if [ -d "build/web" ]; then
 
 /*.js
   Content-Type: application/javascript
+
+/*.json
+  Content-Type: application/json
 EOL
   
   # Criar ou atualizar o arquivo web.config para IIS
@@ -76,6 +79,48 @@ EOL
   </system.webServer>
 </configuration>
 EOL
+
+  # Criar arquivo manifest.json caso não exista
+  if [ ! -f "build/web/manifest.json" ]; then
+    echo "Criando manifest.json básico..."
+    cat > build/web/manifest.json << EOL
+{
+  "name": "Eric Pereira - Portfolio",
+  "short_name": "Eric Pereira",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0175C2",
+  "description": "Portfolio profissional de Eric Pereira",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "icons/Icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/Icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/Icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icons/Icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
+EOL
+  fi
   
   echo "Build concluído com sucesso!"
 else
