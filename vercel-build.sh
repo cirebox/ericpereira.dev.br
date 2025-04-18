@@ -24,13 +24,18 @@ flutter clean
 flutter config --enable-web
 
 # Fazer o build do projeto para web com otimização
-flutter build web --release --web-renderer canvaskit
+# Removendo o parâmetro --web-renderer que não está disponível nesta versão
+flutter build web --release
 
-# Garantir que os tipos MIME estejam configurados corretamente
-echo "Ajustando arquivos para o deploy na Vercel..."
-
-# Criar arquivo _headers para definir tipos MIME
-cat > build/web/_headers << EOL
+# Verificar se o diretório build/web foi criado com sucesso
+if [ -d "build/web" ]; then
+  echo "Diretório build/web criado com sucesso!"
+  
+  # Garantir que os tipos MIME estejam configurados corretamente
+  echo "Ajustando arquivos para o deploy na Vercel..."
+  
+  # Criar arquivo _headers para definir tipos MIME
+  cat > build/web/_headers << EOL
 /*
   Content-Type: text/html; charset=utf-8
 
@@ -46,9 +51,9 @@ cat > build/web/_headers << EOL
 /*.js
   Content-Type: application/javascript
 EOL
-
-# Criar ou atualizar o arquivo web.config para IIS
-cat > build/web/web.config << EOL
+  
+  # Criar ou atualizar o arquivo web.config para IIS
+  cat > build/web/web.config << EOL
 <?xml version="1.0" encoding="utf-8"?>
 <configuration>
   <system.webServer>
@@ -71,5 +76,10 @@ cat > build/web/web.config << EOL
   </system.webServer>
 </configuration>
 EOL
-
-echo "Build concluído com sucesso!"
+  
+  echo "Build concluído com sucesso!"
+else
+  echo "ERRO: O diretório build/web não foi criado!"
+  ls -la build/ || echo "Diretório 'build' não existe!"
+  exit 1
+fi
