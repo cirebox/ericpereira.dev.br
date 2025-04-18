@@ -18,7 +18,7 @@ class Menu extends StatefulWidget {
 class _MenuState extends State<Menu> {
   // Lista de itens do menu de navegação
   final List<Map<String, String>> _navigationItems = [
-    {'text': 'portfolio', 'route': '/portfolio/'},
+    //{'text': 'portfolio', 'route': '/portfolio/'},
   ];
 
   @override

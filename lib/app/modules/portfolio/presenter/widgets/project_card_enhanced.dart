@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../shared/i18n/app_translations.dart';
 import '../../../../shared/widgets/snackbar/snackbar.dart';
 import '../../../../theme/theme.custom.app.dart';
 import '../../domain/entities/project.entity.dart';

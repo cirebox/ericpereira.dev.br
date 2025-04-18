@@ -1,34 +1,90 @@
 [
   {
     "date": "2025-04-17",
-    "title": "Atualização do portfólio",
-    "detail": "Confira os novos projetos adicionados ao portfólio.",
+    "translations": {
+      "pt": {
+        "title": "Atualização do portfólio",
+        "detail": "Confira os novos projetos adicionados ao portfólio.",
+        "body": "Recentemente atualizei meu portfólio com os projetos mais recentes em que trabalhei. Desenvolvi aplicações utilizando Flutter para interfaces de usuário responsivas e Node.js para o backend, seguindo as melhores práticas de desenvolvimento e arquitetura limpa."
+      },
+      "en": {
+        "title": "Portfolio update",
+        "detail": "Check out the new projects added to the portfolio.",
+        "body": "I recently updated my portfolio with the most recent projects I've worked on. I developed applications using Flutter for responsive user interfaces and Node.js for the backend, following the best development practices and clean architecture."
+      },
+      "es": {
+        "title": "Actualización del portafolio",
+        "detail": "Consulta los nuevos proyectos añadidos al portafolio.",
+        "body": "Recientemente actualicé mi portafolio con los proyectos más recientes en los que he trabajado. Desarrollé aplicaciones utilizando Flutter para interfaces de usuario responsivas y Node.js para el backend, siguiendo las mejores prácticas de desarrollo y arquitectura limpia."
+      }
+    },
     "url": "/portfolio",
-    "active": true,
-    "body": "Recentemente atualizei meu portfólio com os projetos mais recentes em que trabalhei. Desenvolvi aplicações utilizando Flutter para interfaces de usuário responsivas e Node.js para o backend, seguindo as melhores práticas de desenvolvimento e arquitetura limpa."
+    "active": false
   },
   {
     "date": "2023-07-17",
-    "title": "Lançamento do site CireBox",
-    "detail": "Lançamento do novo site da empresa cirebox, venha conferir.",
+    "translations": {
+      "pt": {
+        "title": "Lançamento do site CireBox",
+        "detail": "Lançamento do novo site da empresa cirebox, venha conferir.",
+        "body": "O site da CireBox foi completamente redesenhado e reconstruído utilizando tecnologias modernas como React e NextJS. A nova interface oferece melhor experiência para os usuários e traz informações mais detalhadas sobre nossos serviços."
+      },
+      "en": {
+        "title": "CireBox website launch",
+        "detail": "Launch of the new CireBox company website, come check it out.",
+        "body": "The CireBox website has been completely redesigned and rebuilt using modern technologies such as React and NextJS. The new interface offers a better user experience and provides more detailed information about our services."
+      },
+      "es": {
+        "title": "Lanzamiento del sitio web de CireBox",
+        "detail": "Lanzamiento del nuevo sitio web de la empresa CireBox, ven a verlo.",
+        "body": "El sitio web de CireBox ha sido completamente rediseñado y reconstruido utilizando tecnologías modernas como React y NextJS. La nueva interfaz ofrece una mejor experiencia para los usuarios y proporciona información más detallada sobre nuestros servicios."
+      }
+    },
     "url": "https://cirebox.com.br/",
-    "active": true,
-    "body": "O site da CireBox foi completamente redesenhado e reconstruído utilizando tecnologias modernas como React e NextJS. A nova interface oferece melhor experiência para os usuários e traz informações mais detalhadas sobre nossos serviços."
+    "active": true
   },
   {
     "date": "2023-07-03",
-    "title": "Lançamento do site da Saaetri",
-    "detail": "O site da saaetri está de cara nova venha conferir.",
+    "translations": {
+      "pt": {
+        "title": "Lançamento do site da Saaetri",
+        "detail": "O site da saaetri está de cara nova venha conferir.",
+        "body": "Desenvolvemos o novo site da Saaetri focando em melhorar a experiência do usuário e facilitar o acesso às informações importantes. O redesign completo trouxe uma identidade visual mais moderna e funcionalidades aprimoradas para os usuários."
+      },
+      "en": {
+        "title": "Saaetri website launch",
+        "detail": "The Saaetri website has a new look, come check it out.",
+        "body": "We developed the new Saaetri website focusing on improving the user experience and making it easier to access important information. The complete redesign brought a more modern visual identity and enhanced functionality for users."
+      },
+      "es": {
+        "title": "Lanzamiento del sitio web de Saaetri",
+        "detail": "El sitio web de Saaetri tiene un nuevo aspecto, ven a verlo.",
+        "body": "Desarrollamos el nuevo sitio web de Saaetri enfocándonos en mejorar la experiencia del usuario y facilitar el acceso a información importante. El rediseño completo trajo una identidad visual más moderna y funcionalidades mejoradas para los usuarios."
+      }
+    },
     "url": "https://saaetri.com.br/",
-    "active": true,
-    "body": "Desenvolvemos o novo site da Saaetri focando em melhorar a experiência do usuário e facilitar o acesso às informações importantes. O redesign completo trouxe uma identidade visual mais moderna e funcionalidades aprimoradas para os usuários."
+    "active": true
   },
   {
     "date": "2023-05-10",
-    "title": "Participação no evento de tecnologia",
-    "detail": "Palestra sobre desenvolvimento multiplataforma com Flutter.",
+    "translations": {
+      "pt": {
+        "title": "Participação no evento de tecnologia",
+        "detail": "Palestra sobre desenvolvimento multiplataforma com Flutter.",
+        "body": "Participei como palestrante em um evento de tecnologia onde compartilhei experiências sobre desenvolvimento multiplataforma utilizando Flutter. Discutimos casos de uso, vantagens e desafios desta tecnologia em projetos reais."
+      },
+      "en": {
+        "title": "Participation in technology event",
+        "detail": "Talk about cross-platform development with Flutter.",
+        "body": "I participated as a speaker at a technology event where I shared experiences about cross-platform development using Flutter. We discussed use cases, advantages, and challenges of this technology in real projects."
+      },
+      "es": {
+        "title": "Participación en evento de tecnología",
+        "detail": "Charla sobre desarrollo multiplataforma con Flutter.",
+        "body": "Participé como ponente en un evento de tecnología donde compartí experiencias sobre desarrollo multiplataforma utilizando Flutter. Discutimos casos de uso, ventajas y desafíos de esta tecnología en proyectos reales."
+      }
+    },
     "url": "#",
-    "active": false,
-    "body": "Participei como palestrante em um evento de tecnologia onde compartilhei experiências sobre desenvolvimento multiplataforma utilizando Flutter. Discutimos casos de uso, vantagens e desafios desta tecnologia em projetos reais."
+    "active": false
   }
 ]

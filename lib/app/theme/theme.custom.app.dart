@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class CustomTheme with ChangeNotifier {
   ThemeMode get currentTheme => _isDarkTheme ? ThemeMode.dark : ThemeMode.light;
-  static bool _isDarkTheme = false;
+  static bool _isDarkTheme =
+      true; // Alterado para true para iniciar com tema escuro
   void toggleTheme() {
     _isDarkTheme = !_isDarkTheme;
     notifyListeners();

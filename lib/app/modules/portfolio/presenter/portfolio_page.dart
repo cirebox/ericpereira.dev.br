@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../core/domain/exceptions/exceptions.dart';
+import '../../../shared/i18n/app_translations.dart';
 import '../../../shared/services/openwhatsapp.service.dart';
 import '../../../shared/widgets/layout_page.dart';
 import '../../../shared/widgets/text_custom.dart';
 import '../../../theme/theme.custom.app.dart';
 import '../domain/entities/project.entity.dart';
 import 'portfolio_store.dart';
-import 'widgets/project_card_enhanced.dart';
 
 class PortfolioPage extends StatefulWidget {
   final String title;
@@ -24,6 +25,257 @@ class _PortfolioPageState extends State<PortfolioPage> {
   ProjectType? _selectedFilter;
   String? _searchTerm;
   final TextEditingController _searchController = TextEditingController();
+
+  // Método auxiliar para criar o cartão de projeto
+  Widget _buildProjectCard(ProjectEntity project) {
+    return _ProjectCard(
+      project: project,
+      key: Key('project-card-${project.id}'),
+    );
+  }
+
+  // Widget local para exibir o cartão de projeto
+  // Esta é uma implementação temporária para contornar o problema de importação
+  Widget _ProjectCard({required ProjectEntity project, Key? key}) {
+    // Obter o idioma atual
+    final String langCode = Localizations.localeOf(context).languageCode;
+
+    // Obter os dados traduzidos para o idioma atual
+    final name = project.getNameByLang(langCode);
+    final description = project.getDescriptionByLang(langCode) ?? '';
+    final client = project.getClientByLang(langCode) ?? '';
+
+    return Card(
+      elevation: 3,
+      shadowColor: Colors.black.withOpacity(0.2),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(CustomTheme.borderRadiusMedium),
+      ),
+      child: Container(
+        width: 330,
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Imagem do projeto
+            if (project.image != null)
+              Container(
+                height: 140,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.circular(CustomTheme.borderRadiusSmall),
+                  color: Colors.grey.withOpacity(0.1),
+                ),
+                child: ClipRRect(
+                  borderRadius:
+                      BorderRadius.circular(CustomTheme.borderRadiusSmall),
+                  child: Image.asset(
+                    project.image!,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+
+            const SizedBox(height: 16),
+
+            // Nome do projeto
+            TextCustom(
+              name,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+
+            const SizedBox(height: 8),
+
+            // Cliente
+            if (client.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.business,
+                      size: 16,
+                      color: Colors.grey[600],
+                    ),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: TextCustom(
+                        client,
+                        fontSize: 14,
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+            // Descrição
+            TextCustom(
+              description,
+              fontSize: 14,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+
+            const SizedBox(height: 12),
+
+            // Tecnologias
+            Wrap(
+              spacing: 6,
+              runSpacing: 6,
+              children: project.technologies.map((tech) {
+                return Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: CustomTheme.primaryColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: CustomTheme.primaryColor.withOpacity(0.3),
+                      width: 1,
+                    ),
+                  ),
+                  child: TextCustom(
+                    tech,
+                    fontSize: 12,
+                    color: CustomTheme.primaryColor,
+                  ),
+                );
+              }).toList(),
+            ),
+
+            const SizedBox(height: 16),
+
+            // Ano e Tipo
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Icons.calendar_today,
+                      size: 14,
+                      color: Colors.grey[600],
+                    ),
+                    const SizedBox(width: 4),
+                    TextCustom(
+                      '${project.year}',
+                      fontSize: 14,
+                      color: Colors.grey[600],
+                    ),
+                  ],
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: _getColorByType(project.type).withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: TextCustom(
+                    _getTypeLabel(project.type, langCode),
+                    fontSize: 12,
+                    color: _getColorByType(project.type),
+                  ),
+                ),
+              ],
+            ),
+
+            // Link para o projeto
+            if (project.url != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 12),
+                child: InkWell(
+                  onTap: () => _launchURL(project.url!),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.link,
+                        size: 16,
+                        color: CustomTheme.primaryColor,
+                      ),
+                      const SizedBox(width: 4),
+                      TextCustom(
+                        Translate.text('visitProject', context),
+                        fontSize: 14,
+                        color: CustomTheme.primaryColor,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Função auxiliar para lançar URL
+  void _launchURL(String url) async {
+    try {
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(Translate.text('errorOpeningUrl', context)),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(Translate.text('errorOpeningUrl', context) + ': ${e.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  // Função auxiliar para obter a cor com base no tipo
+  Color _getColorByType(ProjectType type) {
+    switch (type) {
+      case ProjectType.website:
+        return CustomTheme.primaryColor;
+      case ProjectType.app:
+        return CustomTheme.secondaryColor;
+      case ProjectType.websystem:
+        return CustomTheme.accentColor;
+      case ProjectType.software:
+        return CustomTheme.errorColor;
+      case ProjectType.apirest:
+        return CustomTheme.warningColor;
+      default:
+        return CustomTheme.infoColor;
+    }
+  }
+
+  // Função auxiliar para obter o rótulo do tipo com base no idioma
+  String _getTypeLabel(ProjectType type, String langCode) {
+    switch (type) {
+      case ProjectType.website:
+        return Translate.text('projectTypeWebsite', context);
+      case ProjectType.app:
+        return Translate.text('projectTypeApp', context);
+      case ProjectType.websystem:
+        return Translate.text('projectTypeWebSystem', context);
+      case ProjectType.software:
+        return Translate.text('projectTypeSoftware', context);
+      case ProjectType.apirest:
+        return Translate.text('projectTypeAPI', context);
+      default:
+        return Translate.text('projectTypeOther', context);
+    }
+  }
 
   @override
   void initState() {
@@ -40,6 +292,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
   List<ProjectEntity> _filterProjects(List<ProjectEntity> projects) {
     var filteredProjects = projects;
 
+    // Obter o idioma atual
+    final String langCode = Localizations.localeOf(context).languageCode;
+
     // Aplicar filtro por tipo
     if (_selectedFilter != null) {
       filteredProjects = filteredProjects
@@ -51,12 +306,17 @@ class _PortfolioPageState extends State<PortfolioPage> {
     if (_searchTerm != null && _searchTerm!.isNotEmpty) {
       filteredProjects = filteredProjects
           .where((project) =>
-              project.name.toLowerCase().contains(_searchTerm!.toLowerCase()) ||
-              (project.description
+              project
+                  .getNameByLang(langCode)
+                  .toLowerCase()
+                  .contains(_searchTerm!.toLowerCase()) ||
+              (project
+                      .getDescriptionByLang(langCode)
                       ?.toLowerCase()
                       .contains(_searchTerm!.toLowerCase()) ??
                   false) ||
-              (project.client
+              (project
+                      .getClientByLang(langCode)
                       ?.toLowerCase()
                       .contains(_searchTerm!.toLowerCase()) ??
                   false))
@@ -112,15 +372,14 @@ class _PortfolioPageState extends State<PortfolioPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          const SizedBox(height: 40),
-          // Título e Descrição
+          const SizedBox(height: 40), // Título e Descrição
           Center(
             child: Column(
               children: [
                 Container(
                   margin: const EdgeInsets.only(bottom: 10),
-                  child: const TextCustom(
-                    'Meu Portfólio',
+                  child: TextCustom(
+                    Translate.text('portfolio', context),
                     fontSize: 46,
                     fontWeight: FontWeight.bold,
                   ),
@@ -145,8 +404,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
                 Container(
                   constraints: const BoxConstraints(maxWidth: 800),
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: const TextCustom(
-                    'Projetos desenvolvidos ao longo da minha carreira como desenvolvedor. Cada projeto representa uma jornada única de aprendizado e crescimento profissional.',
+                  child: TextCustom(
+                    Translate.text('portfolioIntro', context),
                     fontSize: 17,
                     textAlign: TextAlign.center,
                   ),
@@ -166,7 +425,7 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   child: TextField(
                     controller: _searchController,
                     decoration: InputDecoration(
-                      hintText: 'Pesquisar projetos...',
+                      hintText: Translate.text('searchProjects', context),
                       hintStyle: TextStyle(
                         color: Colors.black45,
                         fontSize: CustomTheme.fontSizeBodySmall,
@@ -245,22 +504,31 @@ class _PortfolioPageState extends State<PortfolioPage> {
               runSpacing: 8,
               children: [
                 _buildFilterChip(
-                    ProjectType.website, 'Websites', CustomTheme.primaryColor),
+                    ProjectType.website,
+                    Translate.text('websites', context),
+                    CustomTheme.primaryColor),
                 _buildFilterChip(
-                    ProjectType.app, 'Aplicativos', CustomTheme.secondaryColor),
-                _buildFilterChip(ProjectType.websystem, 'Sistemas Web',
+                    ProjectType.app,
+                    Translate.text('apps', context),
+                    CustomTheme.secondaryColor),
+                _buildFilterChip(
+                    ProjectType.websystem,
+                    Translate.text('webSystems', context),
                     CustomTheme.accentColor),
                 _buildFilterChip(
-                    ProjectType.software, 'Softwares', CustomTheme.errorColor),
-                _buildFilterChip(
-                    ProjectType.apirest, 'APIs', CustomTheme.warningColor),
-                _buildFilterChip(
-                    ProjectType.other, 'Outros', CustomTheme.infoColor),
+                    ProjectType.software,
+                    Translate.text('softwares', context),
+                    CustomTheme.errorColor),
+                _buildFilterChip(ProjectType.apirest,
+                    Translate.text('apis', context), CustomTheme.warningColor),
+                _buildFilterChip(ProjectType.other,
+                    Translate.text('others', context), CustomTheme.infoColor),
                 if (_selectedFilter != null)
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
                     child: ActionChip(
-                      label: const TextCustom('Limpar Filtros', fontSize: 14),
+                      label: TextCustom(Translate.text('clearFilters', context),
+                          fontSize: 14),
                       avatar: const Icon(Icons.clear, size: 18),
                       onPressed: () {
                         setState(() {
@@ -291,14 +559,15 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         size: 48, color: Colors.red),
                     const SizedBox(height: 16),
                     TextCustom(
-                      'Erro ao carregar projetos: ${error.toString()}',
+                      Translate.text('errorLoadingProjects', context) +
+                          ': ${error.toString()}',
                       fontSize: 16,
                       color: Colors.red,
                     ),
                     const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () => store.getProjects(),
-                      child: const TextCustom('Tentar novamente'),
+                      child: TextCustom(Translate.text('tryAgain', context)),
                     ),
                   ],
                 ),
@@ -318,8 +587,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
                         const SizedBox(height: 16),
                         TextCustom(
                           _searchTerm != null && _searchTerm!.isNotEmpty
-                              ? 'Nenhum projeto encontrado para "$_searchTerm"'
-                              : 'Nenhum projeto encontrado para o filtro selecionado',
+                              ? Translate.text('noProjectsFound', context) +
+                                  ' "$_searchTerm"'
+                              : Translate.text('noProjectsForFilter', context),
                           fontSize: 16,
                           color: Colors.grey,
                         ),
@@ -342,8 +612,6 @@ class _PortfolioPageState extends State<PortfolioPage> {
                       cardsPerRow = cardsPerRow < 1 ? 1 : cardsPerRow;
 
                       // Centralizando os cards e distribuindo o espaço de forma mais equilibrada
-                      final horizontalSpacing =
-                          32.0; // Espaçamento horizontal fixo
 
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 2.0),
@@ -361,10 +629,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
                           ),
                           itemCount: filteredProjects.length,
                           itemBuilder: (context, index) {
+                            final project = filteredProjects[index];
                             return Center(
-                              child: ProjectCardEnhanced(
-                                project: filteredProjects[index],
-                              ),
+                              child: _buildProjectCard(project),
                             );
                           },
                         ),
@@ -386,8 +653,8 @@ class _PortfolioPageState extends State<PortfolioPage> {
             child: Center(
               child: Column(
                 children: [
-                  const TextCustom(
-                    'Interessado em trabalhar comigo?',
+                  TextCustom(
+                    Translate.text('interestedInWorking', context),
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
@@ -395,7 +662,9 @@ class _PortfolioPageState extends State<PortfolioPage> {
                   ElevatedButton.icon(
                     onPressed: () => whatsAppOpen(context),
                     icon: const FaIcon(FontAwesomeIcons.whatsapp),
-                    label: const TextCustom('Entre em contato'),
+                    label: TextCustom(
+                      Translate.text('contactMe', context),
+                    ),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 24,

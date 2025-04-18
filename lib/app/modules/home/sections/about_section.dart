@@ -244,9 +244,9 @@ class AboutSection extends StatelessWidget {
       const SizedBox(height: 10),
       _buildExperienceItem(
         context,
-        company: 'Cirebox Tecnologia',
-        position: 'CEO',
-        period: 'Desde 2019',
+        company: Translate.text('companyCircebox', context),
+        position: Translate.text('positionCEO', context),
+        period: Translate.text('periodSince2019', context),
       ),
 
       const SizedBox(height: 20),
@@ -261,9 +261,9 @@ class AboutSection extends StatelessWidget {
       const SizedBox(height: 10),
       _buildEducationItem(
         context,
-        institution: 'Estácio',
-        degree: 'Análise e Desenvolvimento de Sistemas',
-        year: '2021 - 2024',
+        institution: Translate.text('institutionEstacio', context),
+        degree: Translate.text('degreeAnalysis', context),
+        year: Translate.text('period20212024', context),
       ),
 
       const SizedBox(height: 20),
@@ -279,50 +279,50 @@ class AboutSection extends StatelessWidget {
 
       // Front-end
       _buildSkillCategory(context, 'frontend', [
-        'React',
-        'Next.js',
-        'JavaScript',
-        'TypeScript',
-        'HTML',
-        'CSS',
-        'Tailwind',
+        'react',
+        'nextjs',
+        'javascript',
+        'typescript',
+        'html',
+        'css',
+        'tailwind',
       ]),
 
       const SizedBox(height: 15),
 
       // Back-end
       _buildSkillCategory(context, 'backend', [
-        'Node.js',
-        'Express',
-        'NestJS',
+        'nodejs',
+        'express',
+        'nestjs',
       ]),
 
       const SizedBox(height: 15),
 
       // Mobile
       _buildSkillCategory(context, 'mobile', [
-        'Flutter',
-        'Dart',
+        'flutter',
+        'dart',
       ]),
 
       const SizedBox(height: 15),
 
       // Banco de Dados
       _buildSkillCategory(context, 'database', [
-        'PostgreSQL',
-        'MongoDB',
-        'Firebase',
+        'postgresql',
+        'mongodb',
+        'firebase',
       ]),
 
       const SizedBox(height: 15),
 
       // Ferramentas
       _buildSkillCategory(context, 'tools', [
-        'Git',
-        'Docker',
-        'Kubernetes',
-        'AWS',
-        'Figma',
+        'git',
+        'docker',
+        'kubernetes',
+        'aws',
+        'figma',
       ]),
     ];
   }
@@ -353,17 +353,19 @@ class AboutSection extends StatelessWidget {
     );
   }
 
-  Widget _buildSkillChip(String skill) {
-    return Chip(
-      label: Text(
-        skill,
-        style: const TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
+  Widget _buildSkillChip(String skillKey) {
+    return Builder(
+      builder: (context) => Chip(
+        label: Text(
+          Translate.text(skillKey, context),
+          style: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+          ),
         ),
+        backgroundColor: Colors.blue.withOpacity(0.1),
+        side: BorderSide(color: Colors.blue.withOpacity(0.3)),
       ),
-      backgroundColor: Colors.blue.withOpacity(0.1),
-      side: BorderSide(color: Colors.blue.withOpacity(0.3)),
     );
   }
 

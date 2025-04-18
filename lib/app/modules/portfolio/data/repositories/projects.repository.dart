@@ -1,110 +1,152 @@
 import 'package:dartz/dartz.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import '../../../../core/domain/exceptions/exceptions.dart';
-import '../../domain/repositories/projetcs.repository.interface.dart';
-import '../../domain/entities/project.entity.dart';
 
-part 'projects.repository.g.dart';
+import '../../../../core/domain/exceptions/exceptions.dart';
+import '../../domain/entities/project.entity.dart';
+import '../../domain/repositories/projetcs.repository.interface.dart';
 
 class ProjectsRepository implements IProjectsRepository {
-  // final IHttpRequest _http;
-  // AssinaturaRepository(this._http);
   @override
   Future<Either<Failure, List<ProjectEntity>>> getProjects() async {
-    return Right(
-      [
+    try {
+      final projects = [
         ProjectEntity(
-          name: 'Site da Cirebox',
-          type: ProjectType.website,
-          imageUrl: 'assets/images/cirebox.png',
-          launch: '17/07/2024',
-          urlDemo: 'https://cirebox.com.br/',
-          description:
-              'Site institucional com apresentação de serviços e portfólio da empresa de desenvolvimento de software Cirebox.',
-          client: 'Cirebox',
-          stack: ['React', 'Next.js', 'Tailwind CSS', 'Vercel'],
-        ),
-        ProjectEntity(
-          name: 'Site da Saaetri',
-          type: ProjectType.website,
-          imageUrl: 'assets/images/saaetri.png',
-          launch: '03/07/2024',
-          urlDemo: 'http://saaetri.com.br/',
-          description:
-              'Portal institucional para o Serviço Autônomo de Água e Esgoto de Três Rios, com informações sobre serviços, notícias e portal de transparência.',
-          client: 'SAAETRI',
-          stack: ['WordPress', 'PHP', 'MySQL', 'Bootstrap'],
-        ),
-        ProjectEntity(
-          name: 'Victor Feitosa Imóveis',
+          id: '1',
+          nameByLang: {
+            'pt': 'Cirebox Sistema de Gestão',
+            'en': 'Cirebox Management System',
+            'es': 'Cirebox Sistema de Gestión'
+          },
+          descriptionByLang: {
+            'pt':
+                'Sistema completo de gestão empresarial com módulos de finanças, estoque, vendas e CRM.',
+            'en':
+                'Complete business management system with finance, inventory, sales and CRM modules.',
+            'es':
+                'Sistema completo de gestión empresarial con módulos de finanzas, inventario, ventas y CRM.'
+          },
+          clientByLang: {
+            'pt': 'Cirebox Tecnologia',
+            'en': 'Cirebox Technology',
+            'es': 'Cirebox Tecnología'
+          },
+          image: 'assets/images/cirebox.png',
+          url: 'https://cirebox.com',
+          year: 2021,
+          technologies: ['Flutter', 'Node.js', 'PostgreSQL', 'Docker'],
           type: ProjectType.websystem,
-          imageUrl: 'assets/images/victorfeitosaimoveis.png',
-          launch: '10/06/2023',
-          urlDemo: 'https://victorfeitosaimoveis.com.br/',
-          description:
-              'Plataforma imobiliária para listagem e busca de imóveis, com sistema de filtragem avançada e integração com redes sociais.',
-          client: 'Victor Feitosa Imóveis',
-          stack: [
-            'React',
-            'Nodejs',
-            'Postgres',
-            'Express',
-          ],
+          isHighlighted: true,
         ),
         ProjectEntity(
-          name: 'CFC Produtivo',
-          type: ProjectType.app,
-          imageUrl: 'assets/images/cnhbrasil.png',
-          launch: '23/05/2023',
-          urlDemo:
-              'https://play.google.com/store/apps/details?id=br.com.soulsystems.cfcprodutivoapp',
-          description:
-              'Aplicativo móvel desenvolvido para autoescolas, permitindo a gestão de alunos, aulas práticas e teóricas, com sistema de notificações.',
-          client: 'Soul Systems',
-          stack: ['Flutter', 'Firebase', 'RESTful API', 'SQLite'],
-        ),
-        ProjectEntity(
-          name: 'EngExata - Simulador de Financiamento',
+          id: '2',
+          nameByLang: {
+            'pt': 'SAAE Sobral',
+            'en': 'SAAE Sobral',
+            'es': 'SAAE Sobral'
+          },
+          descriptionByLang: {
+            'pt':
+                'Sistema para gestão de serviços de água e esgoto para a cidade de Sobral.',
+            'en':
+                'System for water and sewage service management for the city of Sobral.',
+            'es':
+                'Sistema para la gestión de servicios de agua y alcantarillado para la ciudad de Sobral.'
+          },
+          clientByLang: {
+            'pt': 'SAAE Sobral',
+            'en': 'SAAE Sobral',
+            'es': 'SAAE Sobral'
+          },
+          image: 'assets/images/saaetri.png',
+          url: 'https://saaesobral.com.br',
+          year: 2020,
+          technologies: ['React', 'Node.js', 'MySQL', 'AWS'],
           type: ProjectType.websystem,
-          imageUrl: 'assets/images/engexata-engenharia.png',
-          launch: '26/12/2021',
-          urlDemo: 'https://engexata.com.br/simulador/',
-          description:
-              'Simulador de financiamento imobiliário personalizado para construtora, com cálculos de parcelas, juros e condições de pagamento.',
-          client: 'EngExata Engenharia',
-          stack: ['JavaScript', 'HTML5', 'CSS3', 'Bootstrap'],
+          isHighlighted: false,
         ),
         ProjectEntity(
-          name: 'Unifor - Simulador de Financiamento',
-          type: ProjectType.website,
-          imageUrl: 'assets/images/simulador-unifor.png',
-          launch: '26/10/2021',
-          description:
-              'Simulador de financiamento estudantil para a Universidade de Fortaleza, com diferentes modalidades de pagamento e cálculo de mensalidades.',
-          client: 'Universidade de Fortaleza',
-          stack: ['Angular', 'TypeScript', 'SCSS'],
+          id: '3',
+          nameByLang: {
+            'pt': 'Simulador ENADE Unifor',
+            'en': 'Unifor ENADE Simulator',
+            'es': 'Simulador ENADE Unifor'
+          },
+          descriptionByLang: {
+            'pt':
+                'Plataforma de simulados para preparação dos alunos para o ENADE.',
+            'en': 'Mock test platform to prepare students for ENADE.',
+            'es':
+                'Plataforma de simulacros para preparar a los estudiantes para ENADE.'
+          },
+          clientByLang: {
+            'pt': 'Universidade de Fortaleza',
+            'en': 'University of Fortaleza',
+            'es': 'Universidad de Fortaleza'
+          },
+          image: 'assets/images/simulador-unifor.png',
+          year: 2019,
+          technologies: ['Angular', 'Java Spring', 'Oracle', 'Docker'],
+          type: ProjectType.websystem,
+          isHighlighted: true,
         ),
         ProjectEntity(
-          name: 'Vai Bem Saúde',
+          id: '4',
+          nameByLang: {
+            'pt': 'CNH Brasil App',
+            'en': 'CNH Brasil App',
+            'es': 'CNH Brasil App'
+          },
+          descriptionByLang: {
+            'pt':
+                'Aplicativo móvel para consulta e gerenciamento de CNH digital.',
+            'en':
+                'Mobile app for querying and managing digital driver\'s license.',
+            'es':
+                'Aplicación móvil para consultar y gestionar la licencia de conducir digital.'
+          },
+          clientByLang: {
+            'pt': 'Departamento de Trânsito',
+            'en': 'Department of Transit',
+            'es': 'Departamento de Tránsito'
+          },
+          image: 'assets/images/cnhbrasil.png',
+          url: 'https://play.google.com/store',
+          year: 2020,
+          technologies: ['Flutter', 'Firebase', 'Node.js'],
           type: ProjectType.app,
-          imageUrl: 'assets/images/vai-bem-saude.png',
-          launch: '26/08/2021',
-          description:
-              'Aplicativo de telemedicina e agendamento de consultas médicas, com integração de pagamentos e prontuário eletrônico.',
-          client: 'Vai Bem Saúde',
-          stack: ['Flutter', 'Node.js', 'MongoDB', 'WebRTC'],
+          isHighlighted: true,
         ),
         ProjectEntity(
-          name: 'Box Transporte',
-          type: ProjectType.software,
-          imageUrl: 'assets/images/boxtransporte.png',
-          launch: '26/12/2017',
-          description:
-              'Sistema de gestão para empresas de transporte e logística, com controle de frotas, rotas, motoristas e manutenção de veículos.',
-          client: 'Box Transporte',
-          stack: ['C#', '.NET', 'SQL Server', 'WPF'],
+          id: '5',
+          nameByLang: {
+            'pt': 'Vai Bem Saúde',
+            'en': 'Vai Bem Health',
+            'es': 'Vai Bem Salud'
+          },
+          descriptionByLang: {
+            'pt':
+                'Plataforma de telemedicina para consultas online e monitoramento de pacientes.',
+            'en':
+                'Telemedicine platform for online consultations and patient monitoring.',
+            'es':
+                'Plataforma de telemedicina para consultas online y monitoreo de pacientes.'
+          },
+          clientByLang: {
+            'pt': 'Vai Bem Saúde',
+            'en': 'Vai Bem Health',
+            'es': 'Vai Bem Salud'
+          },
+          image: 'assets/images/vai-bem-saude.png',
+          url: 'https://vaibemsaude.com.br',
+          year: 2022,
+          technologies: ['React', 'Node.js', 'MongoDB', 'AWS'],
+          type: ProjectType.websystem,
+          isHighlighted: true,
         ),
-      ],
-    );
+      ];
+
+      return Right(projects);
+    } catch (e) {
+      return Left(UnknownError(errorMessage: e.toString()));
+    }
   }
 }

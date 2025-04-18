@@ -52,7 +52,7 @@ class _NewsSectionState extends State<NewsSection> {
       // URL externa
       final uri = Uri.parse(url);
       if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-        throw Exception('Não foi possível abrir $url');
+        throw Exception('${Translate.text('cannotOpenUrl', context)} $url');
       }
     }
   }
@@ -123,8 +123,15 @@ class _NewsSectionState extends State<NewsSection> {
   }
 
   Widget _buildNewsCard(PostModel news) {
-    // Calcular tempo de leitura aproximado (baseado no tamanho do conteúdo)
-    final int readTime = _calculateReadTime(news.detail ?? '');
+    // Obter o idioma atual
+    final String langCode = Localizations.localeOf(context).languageCode;
+
+    // Obter conteúdo traduzido para o idioma atual ou usar fallback
+    final String title = news.getTitleByLang(langCode);
+    final String? detail = news.getDetailByLang(langCode);
+
+    // Calcular tempo de leitura aproximado (baseado no tamanho do conteúdo traduzido)
+    final int readTime = _calculateReadTime(detail ?? '');
 
     return Container(
       width: double.infinity,
@@ -139,7 +146,7 @@ class _NewsSectionState extends State<NewsSection> {
           children: [
             // Título no estilo de link (como no site henriquetavares.com)
             TextCustom(
-              news.title,
+              title,
               fontSize: 24,
               fontWeight: FontWeight.bold,
               color: Theme.of(context).primaryColor,
@@ -151,7 +158,7 @@ class _NewsSectionState extends State<NewsSection> {
             Row(
               children: [
                 TextCustom(
-                  news.date,
+                  '${Translate.text('newsDate', context)}: ${news.date}',
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                   color: Theme.of(context)
@@ -165,7 +172,7 @@ class _NewsSectionState extends State<NewsSection> {
 
                 // Ícone de xícara de café para indicar tempo de leitura
                 Text(
-                  '• ${_getReadTimeIcons(readTime)} $readTime min',
+                  '• ${_getReadTimeIcons(readTime)} $readTime ${Translate.text('minuteAbbreviation', context)}',
                   style: TextStyle(
                     fontSize: 14,
                     color: Theme.of(context)
@@ -181,9 +188,9 @@ class _NewsSectionState extends State<NewsSection> {
             const SizedBox(height: 15),
 
             // Descrição
-            if (news.detail != null && news.detail!.isNotEmpty)
+            if (detail != null && detail.isNotEmpty)
               TextCustom(
-                news.detail!,
+                detail,
                 fontSize: 15,
                 fontWeight: FontWeight.w400,
                 color: Theme.of(context).textTheme.bodyMedium?.color,
@@ -208,6 +215,9 @@ class _NewsSectionState extends State<NewsSection> {
     // Média de palavras por minuto de leitura
     const wordsPerMinute = 200;
 
+    // Se o texto estiver vazio, retorna tempo mínimo de 1 minuto
+    if (text.isEmpty) return 1;
+
     // Estima o número de palavras no texto
     final wordCount = text.split(' ').length;
 
@@ -216,14 +226,13 @@ class _NewsSectionState extends State<NewsSection> {
   }
 
   // Retorna ícones de xícara de café baseado no tempo de leitura
-  // Semelhante ao usado no site henriquetavares.com
   String _getReadTimeIcons(int minutes) {
     if (minutes <= 3) {
-      return '☕️';
+      return Translate.text('readingCoffee1', context);
     } else if (minutes <= 7) {
-      return '☕️☕️';
+      return Translate.text('readingCoffee2', context);
     } else {
-      return '☕️☕️☕️';
+      return Translate.text('readingCoffee3', context);
     }
   }
 }
