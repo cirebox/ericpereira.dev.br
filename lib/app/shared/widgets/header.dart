@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
-import 'button_theme.dart';
 import 'logo.dart';
 import 'menu.dart';
+import 'social_buttons.dart';
 
 PreferredSizeWidget header(key) {
   return PreferredSize(
@@ -29,7 +29,7 @@ PreferredSizeWidget header(key) {
                             DeviceScreenType.desktop
                         ? const Menu()
                         : Container(),
-                    const ButtonThemeWidget(),
+                    const SocialButtons(),
                     sizingInformation.deviceScreenType !=
                             DeviceScreenType.desktop
                         ? Padding(

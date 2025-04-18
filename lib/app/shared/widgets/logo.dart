@@ -16,7 +16,7 @@ class Logo extends StatelessWidget {
         children: [
           Container(
             decoration: const BoxDecoration(
-              color: Colors.red,
+              color: Colors.blue,
               borderRadius: BorderRadius.all(
                 Radius.circular(5),
               ),
@@ -37,7 +37,7 @@ class Logo extends StatelessWidget {
           TextCustom(
             'Eric',
             fontWeight: FontWeight.w700,
-            fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
+            fontSize: 40,
             color: Theme.of(context).textTheme.titleMedium!.color,
           ),
           const SizedBox(
@@ -46,7 +46,7 @@ class Logo extends StatelessWidget {
           TextCustom(
             'Pereira',
             fontWeight: FontWeight.w700,
-            fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
+            fontSize: 40,
             color: Theme.of(context).textTheme.titleMedium!.color,
           ),
         ],

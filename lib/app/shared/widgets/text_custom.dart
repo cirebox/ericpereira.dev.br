@@ -6,25 +6,27 @@ import 'package:url_launcher/url_launcher.dart';
 class TextCustom extends StatefulWidget {
   final String data;
   final TextAlign? textAlign;
-  final TextOverflow? textOverflow;
+  final TextOverflow? overflow;
   final Color? color;
   final double? fontSize;
   final FontWeight? fontWeight;
   final TextDecoration? textDecoration;
   final double? textHeight;
   final Function()? onTap;
+  final int? maxLines;
 
   const TextCustom(
     this.data, {
     super.key,
     this.textAlign = TextAlign.start,
-    this.textOverflow,
+    this.overflow,
     this.color,
     this.fontSize = 14,
     this.fontWeight = FontWeight.w600,
     this.textDecoration,
     this.textHeight,
     this.onTap,
+    this.maxLines,
   });
 
   @override
@@ -53,10 +55,10 @@ class _TextCustomState extends State<TextCustom> {
   Widget _text() => Text(
         widget.data,
         textAlign: widget.textAlign,
-        overflow: widget.textOverflow,
+        overflow: widget.overflow,
         textScaleFactor: 0.8,
         softWrap: true,
-        // maxLines: 8,
+        maxLines: widget.maxLines,
         style: GoogleFonts.roboto(
           height: widget.textHeight,
           textStyle: TextStyle(

@@ -41,7 +41,7 @@ class NotFoundPage extends StatelessWidget {
                             Theme.of(context).textTheme.titleMedium!.fontSize,
                         color: Theme.of(context).textTheme.titleMedium!.color,
                         fontWeight: FontWeight.w600,
-                        textOverflow: TextOverflow.ellipsis,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     const SizedBox(
@@ -54,7 +54,7 @@ class NotFoundPage extends StatelessWidget {
                         fontSize: 20,
                         fontWeight: FontWeight.w400,
                         color: Theme.of(context).textTheme.titleMedium!.color,
-                        textOverflow: TextOverflow.ellipsis,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     const SizedBox(

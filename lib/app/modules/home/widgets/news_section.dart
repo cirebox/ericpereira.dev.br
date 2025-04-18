@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../shared/models/post_model.dart';
-import '../../shared/widgets/posts_widgets.dart';
-import '../../shared/widgets/text_custom.dart';
+
+import '../../../shared/models/post_model.dart';
+import '../../../shared/widgets/posts_widgets.dart';
+import '../../../shared/widgets/text_custom.dart';
 
 class NewsSection extends StatelessWidget {
   final List<PostModel> posts;

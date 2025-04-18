@@ -1,36 +1,40 @@
-class PostModel {
+class NewsModel {
+  final String id;
   final String date;
   final String title;
-  final String? detail;
+  final String description;
   final String? url;
   final bool active;
-  final String? body;
+  final String body;
 
-  const PostModel({
+  const NewsModel({
+    required this.id,
     required this.date,
     required this.title,
-    this.detail,
+    required this.description,
     this.url,
-    this.active = true,
-    this.body,
+    required this.active,
+    required this.body,
   });
 
-  factory PostModel.fromJson(Map<String, dynamic> json) {
-    return PostModel(
+  factory NewsModel.fromJson(Map<String, dynamic> json) {
+    return NewsModel(
+      id: json['id'] ?? '',
       date: json['date'] ?? '',
       title: json['title'] ?? '',
-      detail: json['detail'],
+      description: json['description'] ?? '',
       url: json['url'],
       active: json['active'] ?? true,
-      body: json['body'],
+      body: json['body'] ?? '',
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'date': date,
       'title': title,
-      'detail': detail,
+      'description': description,
       'url': url,
       'active': active,
       'body': body,

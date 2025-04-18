@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'footer.dart';
-import 'header.dart';
+import 'header/header.dart';
 import 'menu.dart';
 
 class LayoutPage extends StatefulWidget {
