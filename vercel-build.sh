@@ -1,20 +1,24 @@
 #!/bin/bash
 
-# Baixar o Flutter
+# Definir versão do Flutter
+FLUTTER_VERSION="3.19.3"
+
+# Baixar o Flutter usando URL direta em vez de git clone
 if [ -d "flutter" ]; then
-  echo "Atualizando o Flutter..."
-  cd flutter
-  git pull
-  cd ..
+  echo "Flutter já existe, usando a versão existente..."
 else
-  echo "Clonando o Flutter..."
-  git clone https://github.com/flutter/flutter.git
+  echo "Baixando Flutter $FLUTTER_VERSION..."
+  mkdir -p flutter
+  curl -L "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz" -o flutter.tar.xz
+  tar xf flutter.tar.xz -C .
+  rm flutter.tar.xz
 fi
 
 # Adicionar Flutter ao PATH
 export PATH="$PATH:`pwd`/flutter/bin"
 
-# Verificar instalação do Flutter sem executar como root
+# Verificar instalação do Flutter
+flutter --version
 flutter doctor
 
 # Limpar qualquer build anterior
@@ -30,6 +34,21 @@ flutter build web --release
 # Verificar se o diretório build/web foi criado com sucesso
 if [ -d "build/web" ]; then
   echo "Diretório build/web criado com sucesso!"
+  
+  # Garantir que os diretórios de ícones e imagens existam
+  mkdir -p build/web/icons
+  
+  # Copiar ícones da pasta web para build/web se existirem
+  if [ -d "web/icons" ]; then
+    echo "Copiando ícones para build/web/icons..."
+    cp -r web/icons/* build/web/icons/
+  fi
+  
+  # Copiar favicon se existir
+  if [ -f "web/favicon.png" ]; then
+    echo "Copiando favicon.png para build/web..."
+    cp web/favicon.png build/web/
+  fi
   
   # Garantir que os tipos MIME estejam configurados corretamente
   echo "Ajustando arquivos para o deploy na Vercel..."
@@ -120,6 +139,13 @@ EOL
   ]
 }
 EOL
+  fi
+  
+  # Verificar e atualizar o index.html para corrigir meta tags
+  if [ -f "build/web/index.html" ]; then
+    echo "Atualizando meta tags no index.html..."
+    # Adiciona a meta tag mobile-web-app-capable se não existir
+    grep -q 'mobile-web-app-capable' build/web/index.html || sed -i '/<meta name="apple-mobile-web-app-capable" content="yes">/a \  <meta name="mobile-web-app-capable" content="yes">' build/web/index.html
   fi
   
   echo "Build concluído com sucesso!"
