@@ -30,6 +30,7 @@ flutter config --enable-web
 # Fazer o build do projeto para web com otimização
 # Removendo o parâmetro --web-renderer que não está disponível nesta versão
 flutter build web --release
+flutter build web --release
 
 # Verificar se o diretório build/web foi criado com sucesso
 if [ -d "build/web" ]; then

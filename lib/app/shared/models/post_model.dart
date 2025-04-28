@@ -37,6 +37,8 @@ class PostModel {
     required this.translations,
     this.url,
     this.active = true,
+    required String title,
+    String? detail,
   });
 
   // Getters para facilitar o acesso aos campos do idioma atual ou padrão
@@ -78,6 +80,7 @@ class PostModel {
         translations: {'pt': ptTranslation},
         url: json['url'],
         active: json['active'] ?? true,
+        title: '',
       );
     }
 
@@ -94,6 +97,7 @@ class PostModel {
       translations: translations,
       url: json['url'],
       active: json['active'] ?? true,
+      title: '',
     );
   }
 

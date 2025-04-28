@@ -110,6 +110,7 @@ class AppTranslations {
           'Nenhum projeto encontrado para o filtro selecionado',
       'interestedInWorking': 'Interessado em trabalhar comigo?',
       'getInTouch': 'Entre em contato',
+      'currentOccupation': 'Ocupação atual',
     },
     'en': {
       'about': 'About',
@@ -204,6 +205,7 @@ class AppTranslations {
       'projectClient': 'Client',
       'projectDescription': 'Description',
       'projectLink': 'Visit project',
+      'currentOccupation': 'Current Occupation',
     },
     'es': {
       'about': 'Sobre mí',
@@ -299,7 +301,7 @@ class AppTranslations {
       'projectYear': 'Año',
       'projectClient': 'Cliente',
       'projectDescription': 'Descripción',
-      'projectLink': 'Visitar proyecto',
+      'projectLink': 'Visitar projeto',
     },
   };
 

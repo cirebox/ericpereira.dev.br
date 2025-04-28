@@ -236,7 +236,7 @@ class AboutSection extends StatelessWidget {
     return [
       // Experiência
       TextCustom(
-        Translate.text('experience', context),
+        Translate.text('currentOccupation', context),
         fontSize: 20,
         fontWeight: FontWeight.bold,
         color: Theme.of(context).textTheme.titleLarge?.color,

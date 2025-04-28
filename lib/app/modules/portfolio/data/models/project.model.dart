@@ -1,64 +1,76 @@
 import '../../domain/entities/project.entity.dart';
+import 'project_translation.dart';
 
 class ProjectModel extends ProjectEntity {
   ProjectModel({
-    required Map<String, ProjectTranslation> translations,
-    String imageUrl = '',
-    String launch = '',
-    ProjectType type = ProjectType.app,
-    bool visible = true,
+    required String id,
+    required Map<String, String> nameByLang,
+    Map<String, String>? descriptionByLang,
+    Map<String, String>? clientByLang,
+    String? imageUrl,
     String? urlDemo,
-    List<String>? stack,
-    String? githubUrl,
+    int? year,
+    List<String> technologies = const [],
+    required ProjectType type,
+    bool isHighlighted = false,
   }) : super(
-          translations: translations,
-          imageUrl: imageUrl,
-          launch: launch,
+          id: id,
+          nameByLang: nameByLang,
+          descriptionByLang: descriptionByLang,
+          clientByLang: clientByLang,
+          image: imageUrl,
+          url: urlDemo,
+          year: year,
+          technologies: technologies,
           type: type,
-          visible: visible,
-          urlDemo: urlDemo,
-          stack: stack,
-          githubUrl: githubUrl,
+          isHighlighted: isHighlighted,
         );
 
-  ProjectModel.fromJson(Map<String, dynamic> json)
-      : super(
-          translations: _parseTranslations(json),
-          imageUrl: json['imageUrl'] ?? '',
-          launch: json['launch'] ?? '',
-          type: _parseProjectType(json['type']),
-          visible: json['visible'] ?? true,
-          urlDemo: json['urlDemo'],
-          stack: _parseStack(json['stack']),
-          githubUrl: json['githubUrl'],
-        );
+  factory ProjectModel.fromJson(Map<String, dynamic> json) {
+    Map<String, String> nameByLang = {};
+    Map<String, String> descriptionByLang = {};
+    Map<String, String> clientByLang = {};
+    List<String> technologies = [];
 
-  static Map<String, ProjectTranslation> _parseTranslations(
-      Map<String, dynamic> json) {
-    // Formato novo com campos de traduções
+    // Processar as traduções
     if (json.containsKey('translations')) {
       final Map<String, dynamic> translationsJson = json['translations'] ?? {};
-      final Map<String, ProjectTranslation> translations = {};
 
       translationsJson.forEach((lang, value) {
-        translations[lang] = ProjectTranslation(
-          name: value['name'] ?? '',
-          description: value['description'],
-          client: value['client'],
-        );
+        if (value['name'] != null) nameByLang[lang] = value['name'];
+        if (value['description'] != null)
+          descriptionByLang[lang] = value['description'];
+        if (value['client'] != null) clientByLang[lang] = value['client'];
       });
-
-      return translations;
+    } else {
+      // Formato antigo sem traduções
+      if (json['name'] != null) nameByLang['pt'] = json['name'];
+      if (json['description'] != null)
+        descriptionByLang['pt'] = json['description'];
+      if (json['client'] != null) clientByLang['pt'] = json['client'];
     }
 
-    // Formato antigo: só possui campos simples, criar uma tradução padrão em português
-    final ptTranslation = ProjectTranslation(
-      name: json['name'] ?? '',
-      description: json['description'],
-      client: json['client'],
-    );
+    // Processar a stack/technologies
+    if (json['stack'] != null && json['stack'] is List) {
+      technologies =
+          List<String>.from(json['stack'].map((item) => item.toString()));
+    }
 
-    return {'pt': ptTranslation};
+    return ProjectModel(
+      id: json['id'] ?? '',
+      nameByLang: nameByLang,
+      descriptionByLang:
+          descriptionByLang.isNotEmpty ? descriptionByLang : null,
+      clientByLang: clientByLang.isNotEmpty ? clientByLang : null,
+      imageUrl: json['imageUrl'],
+      urlDemo: json['urlDemo'],
+      year: json['launch'] != null
+          ? int.tryParse(json['launch'].toString())
+          : null,
+      technologies: technologies,
+      type: _parseProjectType(json['type']),
+      isHighlighted: json['visible'] ?? false,
+    );
   }
 
   static ProjectType _parseProjectType(dynamic type) {
@@ -89,36 +101,30 @@ class ProjectModel extends ProjectEntity {
     return ProjectType.other;
   }
 
-  static List<String>? _parseStack(dynamic stack) {
-    if (stack == null) return null;
-
-    if (stack is List) {
-      return stack.map((item) => item.toString()).toList();
-    }
-
-    return null;
-  }
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> translationsJson = {};
 
-    translations.forEach((lang, translation) {
-      translationsJson[lang] = {
-        'name': translation.name,
-        'description': translation.description,
-        'client': translation.client,
-      };
+    nameByLang.forEach((lang, name) {
+      translationsJson[lang] = {'name': name};
+
+      if (descriptionByLang != null && descriptionByLang!.containsKey(lang)) {
+        translationsJson[lang]['description'] = descriptionByLang![lang];
+      }
+
+      if (clientByLang != null && clientByLang!.containsKey(lang)) {
+        translationsJson[lang]['client'] = clientByLang![lang];
+      }
     });
 
     return {
+      'id': id,
       'translations': translationsJson,
-      'imageUrl': imageUrl,
-      'urlDemo': urlDemo,
-      'githubUrl': githubUrl,
+      'imageUrl': image,
+      'urlDemo': url,
+      'launch': year?.toString(),
       'type': type.toString().split('.').last,
-      'visible': visible,
-      'stack': stack,
-      'launch': launch,
+      'visible': isHighlighted,
+      'stack': technologies,
     };
   }
 }

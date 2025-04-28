@@ -24,6 +24,7 @@ class NewsLandingStore extends NotifierStore<Failure, List<PostModel>> {
                     title: news.title,
                     detail: news.detail,
                     url: news.url,
+                    translations: {},
                   ))
               .toList();
           update(posts);

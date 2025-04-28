@@ -1,7 +1,7 @@
 {
   "version": 2,
   "public": true,
-  "buildCommand": null,
+  "buildCommand": "chmod +x ./vercel-build.sh && ./vercel-build.sh",
   "outputDirectory": "build/web",
   "headers": [
     {
